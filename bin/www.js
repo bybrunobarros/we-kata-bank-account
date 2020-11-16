@@ -1,8 +1,10 @@
 #!/usr/bin/env node
 
 import http from "http";
-import { app } from "../app.js";
+import { createApp } from "../app.js";
+import { initDatabase } from "../data/init-database.js";
 
+const app = createApp(initDatabase());
 const port = normalizePort(process.env.PORT || "3000");
 app.set("port", port);
 const server = http.createServer(app);
