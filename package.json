@@ -2,7 +2,7 @@
   "name": "we-kata-bank-account",
   "version": "0.0.0",
   "description": "Bank account kata in JavaScript",
-  "main": "index.js",
+  "main": "bin/www.js",
   "scripts": {
     "data:setup": "cd data && knex migrate:down --esm && knex migrate:up --esm --env development && knex seed:run --esm",
     "start:init": "npm run data:setup && NODE_ENV=development node bin/www.js",
