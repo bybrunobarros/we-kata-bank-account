@@ -1,0 +1,92 @@
+{
+  "name": "we-kata-bank-account",
+  "version": "0.0.0",
+  "description": "Bank account kata in JavaScript",
+  "main": "index.js",
+  "scripts": {
+    "data:setup": "cd data && knex migrate:down --esm && knex migrate:up --esm --env development && knex seed:run --esm",
+    "start:init": "npm run data:setup && NODE_ENV=development node bin/www.js",
+    "start:watch": "NODE_ENV=development nodemon bin/www.js",
+    "format": "prettier --check ./**/*.js",
+    "format:fix": "prettier --write ./**/*.js",
+    "lint": "eslint ./**/*.js",
+    "lint:fix": "eslint --cache --fix ./**/*.js",
+    "test": "ava",
+    "test:unit": "ava --config ava.unit.config.js",
+    "test:endpoint": "ava --config ava.endpoint.config.js",
+    "test:coverage": "c8 --require esm --reporter=lcov --reporter=text ava",
+    "test:watch": "ava --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bybrunobarros/we-kata-bank-account.git"
+  },
+  "author": "Bruno Barros",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/bybrunobarros/we-kata-bank-account/issues"
+  },
+  "homepage": "https://github.com/bybrunobarros/we-kata-bank-account#readme",
+  "dependencies": {
+    "express": "~4.16.1",
+    "http-status": "^1.4.2",
+    "joi": "^17.3.0",
+    "knex": "^0.21.12"
+  },
+  "devDependencies": {
+    "ava": "^3.12.1",
+    "c8": "^7.3.5",
+    "eslint": "^7.8.1",
+    "eslint-config-prettier": "^6.11.0",
+    "husky": "^4.3.0",
+    "lint-staged": "^10.3.0",
+    "node-fetch": "^2.6.1",
+    "node-mocks-http": "^1.9.0",
+    "nodemon": "^2.0.6",
+    "prettier": "^2.1.1",
+    "sqlite3": "^5.0.0",
+    "test-listen": "^1.1.0"
+  },
+  "engines": {
+    "node": ">=14"
+  },
+  "type": "module",
+  "prettier": {
+    "trailingComma": "all"
+  },
+  "eslintConfig": {
+    "env": {
+      "es6": true,
+      "node": true
+    },
+    "extends": [
+      "eslint:recommended",
+      "prettier"
+    ],
+    "parserOptions": {
+      "ecmaVersion": 2019,
+      "sourceType": "module"
+    }
+  },
+  "ava": {
+    "extensions": [
+      "js"
+    ]
+  },
+  "c8": {
+    "exclude": [
+      "**/*.test.js"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.js": [
+      "npm run lint:fix",
+      "npm run format:fix"
+    ]
+  }
+}
