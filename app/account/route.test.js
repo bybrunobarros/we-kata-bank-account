@@ -22,14 +22,11 @@ test("should create a new account when requested", async (t) => {
   });
 
   t.is(response.status, 200);
-  t.deepEqual(
-    {
-      status: "succeed",
-      body: {
-        id: 3,
-        date: getDateFromDatetime(),
-      },
+  t.deepEqual(await response.json(), {
+    status: "succeed",
+    body: {
+      id: 3,
+      date: getDateFromDatetime(),
     },
-    await response.json(),
-  );
+  });
 });

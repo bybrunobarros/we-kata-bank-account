@@ -50,7 +50,7 @@ test("should return 422 when the body is malformed", async (t) => {
     }),
   });
 
-  t.is(422, response.status);
+  t.is(response.status, 422);
   t.deepEqual(
     {
       status: "failed",
@@ -71,7 +71,7 @@ test("should return 422 when the operation is not recognized", async (t) => {
     }),
   });
 
-  t.is(422, response.status);
+  t.is(response.status, 422);
   t.deepEqual(
     {
       status: "failed",
@@ -92,7 +92,7 @@ test("should return 422 when the amount is negative", async (t) => {
     }),
   });
 
-  t.is(422, response.status);
+  t.is(response.status, 422);
   t.deepEqual(
     {
       status: "failed",
@@ -165,7 +165,7 @@ test("should return 422 when balance is not enough to withdraw", async (t) => {
     }),
   });
 
-  t.is(422, response.status);
+  t.is(response.status, 422);
   t.deepEqual(
     {
       status: "failed",

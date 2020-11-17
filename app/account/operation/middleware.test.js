@@ -49,18 +49,15 @@ test("should add 20 to current balance when users make a deposit of 20", async (
   await operate(db)(request, response);
 
   t.is(response._getStatusCode(), 200);
-  t.deepEqual(
-    {
-      status: "succeed",
-      body: {
-        operation: "deposit",
-        amount: 20,
-        balance: 100,
-        date: getDateFromDatetime(),
-      },
+  t.deepEqual(response._getJSONData(), {
+    status: "succeed",
+    body: {
+      operation: "deposit",
+      amount: 20,
+      balance: 100,
+      date: getDateFromDatetime(),
     },
-    response._getJSONData(),
-  );
+  });
 });
 
 test("should subtract 20 to current balance when users make a withdrawal of 20", async (t) => {
@@ -77,18 +74,15 @@ test("should subtract 20 to current balance when users make a withdrawal of 20",
   await operate(db)(request, response);
 
   t.is(response._getStatusCode(), 200);
-  t.deepEqual(
-    {
-      status: "succeed",
-      body: {
-        operation: "withdrawal",
-        amount: 20,
-        balance: 60,
-        date: getDateFromDatetime(),
-      },
+  t.deepEqual(response._getJSONData(), {
+    status: "succeed",
+    body: {
+      operation: "withdrawal",
+      amount: 20,
+      balance: 60,
+      date: getDateFromDatetime(),
     },
-    response._getJSONData(),
-  );
+  });
 });
 
 test("should return an error when balance is not enough to withdraw", async (t) => {
@@ -105,13 +99,10 @@ test("should return an error when balance is not enough to withdraw", async (t) 
   await operate(db)(request, response);
 
   t.is(response._getStatusCode(), 422);
-  t.deepEqual(
-    {
-      status: "failed",
-      body: { message: "Insufficient balance" },
-    },
-    response._getJSONData(),
-  );
+  t.deepEqual(response._getJSONData(), {
+    status: "failed",
+    body: { message: "Insufficient balance" },
+  });
 });
 
 test("should return an error when the amount is negative", async (t) => {
@@ -128,13 +119,10 @@ test("should return an error when the amount is negative", async (t) => {
   await operate(db)(request, response);
 
   t.is(response._getStatusCode(), 422);
-  t.deepEqual(
-    {
-      status: "failed",
-      body: { message: "Amount must be positive" },
-    },
-    response._getJSONData(),
-  );
+  t.deepEqual(response._getJSONData(), {
+    status: "failed",
+    body: { message: "Amount must be positive" },
+  });
 });
 
 test("should return an error when the operation is not recognized", async (t) => {
@@ -151,13 +139,10 @@ test("should return an error when the operation is not recognized", async (t) =>
   await operate(db)(request, response);
 
   t.is(response._getStatusCode(), 422);
-  t.deepEqual(
-    {
-      status: "failed",
-      body: { message: "Unknown operation" },
-    },
-    response._getJSONData(),
-  );
+  t.deepEqual(response._getJSONData(), {
+    status: "failed",
+    body: { message: "Unknown operation" },
+  });
 });
 
 test("should return a list of operations when user id and account id match", async (t) => {
@@ -166,32 +151,29 @@ test("should return a list of operations when user id and account id match", asy
   await list(db)(request, response);
 
   t.is(response._getStatusCode(), 200);
-  t.deepEqual(
-    {
-      status: "succeed",
-      body: [
-        {
-          operation: "deposit",
-          amount: 100,
-          balance: 100,
-          date: "2020-11-01",
-        },
-        {
-          operation: "deposit",
-          amount: 20,
-          balance: 120,
-          date: "2020-11-02",
-        },
-        {
-          operation: "withdrawal",
-          amount: 40,
-          balance: 80,
-          date: "2020-11-03",
-        },
-      ],
-    },
-    response._getJSONData(),
-  );
+  t.deepEqual(response._getJSONData(), {
+    status: "succeed",
+    body: [
+      {
+        operation: "deposit",
+        amount: 100,
+        balance: 100,
+        date: "2020-11-01",
+      },
+      {
+        operation: "deposit",
+        amount: 20,
+        balance: 120,
+        date: "2020-11-02",
+      },
+      {
+        operation: "withdrawal",
+        amount: 40,
+        balance: 80,
+        date: "2020-11-03",
+      },
+    ],
+  });
 });
 
 test("should return an empty list when user id and account id don't match", async (t) => {
@@ -211,11 +193,8 @@ test("should return an empty list when user id and account id don't match", asyn
   await list(db)(request, response);
 
   t.is(response._getStatusCode(), 200);
-  t.deepEqual(
-    {
-      status: "succeed",
-      body: [],
-    },
-    response._getJSONData(),
-  );
+  t.deepEqual(response._getJSONData(), {
+    status: "succeed",
+    body: [],
+  });
 });
