@@ -1,9 +1,13 @@
-export const create = (/* db */) => (req, res) => {
+import { createAccount } from "./service.js";
+
+export const create = (db) => async (req, res) => {
+  const { id, created_at } = await createAccount(db)(req.body.name);
+
   res.json({
     status: "succeed",
     body: {
-      id: 3,
-      date: new Date().toISOString().split("T")[0],
+      id,
+      date: new Date(created_at).toISOString().split("T")[0],
     },
   });
 };
