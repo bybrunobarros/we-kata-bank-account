@@ -154,3 +154,24 @@ test("should subtract 20 when user make a withdrawal of 20", async (t) => {
     await response.json(),
   );
 });
+
+test("should return 422 when balance is not enough to withdraw", async (t) => {
+  await arrange(t);
+
+  const response = await fetch(`${t.context.prefixUrl}/accounts/1/operations`, {
+    ...defaultPostRequest,
+    body: JSON.stringify({
+      type: "withdrawal",
+      amount: 100,
+    }),
+  });
+
+  t.is(422, response.status);
+  t.deepEqual(
+    {
+      status: "failed",
+      body: { message: "Insufficient balance" },
+    },
+    await response.json(),
+  );
+});

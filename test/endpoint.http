@@ -60,3 +60,25 @@ Authorization: Bearer QWxiZXJ0
   "type": "deposit",
   "amount": 20
 }
+
+### should subtract 20 when user make a withdrawal of 20
+POST http://localhost:3000/accounts/1/operations/
+Content-Type: application/json
+Cache-Control: no-cache
+Authorization: Bearer QWxiZXJ0
+
+{
+  "type": "withdrawal",
+  "amount": 20
+}
+
+### should return 422 when balance is not enough to withdraw
+POST http://localhost:3000/accounts/1/operations/
+Content-Type: application/json
+Cache-Control: no-cache
+Authorization: Bearer QWxiZXJ0
+
+{
+  "type": "withdrawal",
+  "amount": 100
+}
