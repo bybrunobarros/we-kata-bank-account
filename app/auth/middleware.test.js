@@ -24,3 +24,11 @@ test("should return 401 when authentication token is not recognized", async (t) 
 
   t.is(response._getStatusCode(), 401);
 });
+
+test("should add the user to the request context when the user exists", async (t) => {
+  const { db, request, response, next } = await arrange(t, defaultGetRequest);
+
+  await authenticate(db)(request, response, next);
+
+  t.is(request.context.user.id, 1);
+});
