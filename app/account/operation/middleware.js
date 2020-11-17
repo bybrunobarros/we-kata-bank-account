@@ -1,9 +1,22 @@
 import httpStatus from "http-status";
 import { getDateFromDatetime } from "../../common/get-date-from-datetime.js";
-import { createOperation } from "./service.js";
+import { createOperation, listOperations } from "./service.js";
 
-const list = (/* db */) => async (req, res) => {
-  res.json({});
+const formatBody = (operation) => ({
+  amount: operation.amount,
+  balance: operation.balance,
+  date: getDateFromDatetime(operation.created_at),
+  operation: operation.type,
+});
+
+const list = (db) => async (req, res) => {
+  const { user, accountId } = req.context;
+  const operations = await listOperations(db)(user.id, accountId);
+
+  return res.json({
+    status: "succeed",
+    body: operations.map(formatBody),
+  });
 };
 
 const operate = (db) => async (req, res) => {
@@ -28,12 +41,7 @@ const operate = (db) => async (req, res) => {
 
   res.json({
     status: "succeed",
-    body: {
-      amount: operation.amount,
-      balance: operation.balance,
-      date: getDateFromDatetime(operation.created_at),
-      operation: operation.type,
-    },
+    body: formatBody(operation),
   });
 };
 

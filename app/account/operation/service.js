@@ -15,7 +15,7 @@ const getLastOperation = (db) => async (userId, accountId) => {
   return operations[0];
 };
 
-export const createOperation = (db) => async ({
+const createOperation = (db) => async ({
   userId,
   accountId,
   operationType,
@@ -48,3 +48,11 @@ export const createOperation = (db) => async ({
 
   return getLastOperation(db)(userId, accountId);
 };
+
+const listOperations = (db) => (userId, accountId) =>
+  db("operation").select("type", "amount", "balance", "created_at").where({
+    account_id: accountId,
+    user_id: userId,
+  });
+
+export { createOperation, listOperations };
