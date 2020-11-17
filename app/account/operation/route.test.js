@@ -7,6 +7,18 @@ const arrange = async (t) => {
   await setupServer(t);
 };
 
+const defaultPostRequest = {
+  method: "post",
+  headers: {
+    Authorization: "Bearer QWxiZXJ0",
+    "Content-Type": "application/json",
+  },
+  body: JSON.stringify({
+    type: "deposit",
+    amount: 20,
+  }),
+};
+
 test("should return 401 when authentication token is not recognized", async (t) => {
   await arrange(t);
 
@@ -34,11 +46,7 @@ test("should return 422 when the body is malformed", async (t) => {
   await arrange(t);
 
   const response = await fetch(`${t.context.prefixUrl}/accounts/1/operations`, {
-    method: "post",
-    headers: {
-      Authorization: "Bearer QWxiZXJ0",
-      "Content-Type": "application/json",
-    },
+    ...defaultPostRequest,
     body: JSON.stringify({
       type: "deposit",
     }),
@@ -58,14 +66,10 @@ test("should return 422 when the operation is not recognized", async (t) => {
   await arrange(t);
 
   const response = await fetch(`${t.context.prefixUrl}/accounts/1/operations`, {
-    method: "post",
-    headers: {
-      Authorization: "Bearer QWxiZXJ0",
-      "Content-Type": "application/json",
-    },
+    ...defaultPostRequest,
     body: JSON.stringify({
       type: "transfer",
-      amount: 100,
+      amount: 20,
     }),
   });
 
