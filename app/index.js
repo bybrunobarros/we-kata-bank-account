@@ -1,4 +1,5 @@
 import express from "express";
+import httpStatus from "http-status";
 import operationRouter from "./account/operation/route.js";
 import accountRouter from "./account/route.js";
 import { sendError, sendPayload } from "./common/middleware/send.js";
@@ -15,6 +16,10 @@ export const createApp = (db) => {
   });
   app.use("/", accountRouter(db));
   app.use("/", operationRouter(db));
-
+  // NOTE: error handlers need four arguments https://expressjs.com/en/guide/error-handling.html#writing-error-handlers
+  // eslint-disable-next-line no-unused-vars
+  app.use((err, req, res, next) =>
+    res.sendError(httpStatus.INTERNAL_SERVER_ERROR, err.message),
+  );
   return app;
 };
