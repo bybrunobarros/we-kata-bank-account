@@ -129,3 +129,28 @@ test("should add 20 when user make a deposit of 20", async (t) => {
     await response.json(),
   );
 });
+
+test("should subtract 20 when user make a withdrawal of 20", async (t) => {
+  await arrange(t);
+
+  const response = await fetch(`${t.context.prefixUrl}/accounts/1/operations`, {
+    ...defaultPostRequest,
+    body: JSON.stringify({
+      type: "withdrawal",
+      amount: 20,
+    }),
+  });
+
+  t.deepEqual(
+    {
+      status: "succeed",
+      body: {
+        operation: "withdrawal",
+        amount: 20,
+        balance: 60,
+        date: getDateFromDatetime(),
+      },
+    },
+    await response.json(),
+  );
+});
