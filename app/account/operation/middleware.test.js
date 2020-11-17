@@ -57,11 +57,34 @@ test("should return an error when the amount is negative", async (t) => {
 
   await operate(db)(request, response);
 
-  t.is(response._getStatusCode(), 409);
+  t.is(response._getStatusCode(), 422);
   t.deepEqual(
     {
       status: "failed",
       body: { message: "Amount must be positive" },
+    },
+    response._getJSONData(),
+  );
+});
+
+test("should return an error when the operation is not recognized", async (t) => {
+  const { db, request, response } = await arrange(t, {
+    ...defaultPostRequest,
+    ...{
+      body: {
+        type: "transfer",
+        amount: 20,
+      },
+    },
+  });
+
+  await operate(db)(request, response);
+
+  t.is(response._getStatusCode(), 422);
+  t.deepEqual(
+    {
+      status: "failed",
+      body: { message: "Unknown operation" },
     },
     response._getJSONData(),
   );
