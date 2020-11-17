@@ -1,6 +1,5 @@
 import test from "ava";
-import httpMocks from "node-mocks-http";
-import { setupDatabase } from "../../../test/helper/setup-database.js";
+import { arrange } from "../../../test/helper/arrange-middleware.js";
 import { getDateFromDatetime } from "../../common/get-date-from-datetime.js";
 import { operate } from "./middleware.js";
 
@@ -27,11 +26,7 @@ const defaultPostRequest = {
 };
 
 test("should add 20 to current balance when users make a deposit of 20", async (t) => {
-  const db = await setupDatabase(t);
-  const request = httpMocks.createRequest({
-    ...defaultPostRequest,
-  });
-  let response = httpMocks.createResponse();
+  const { db, request, response } = await arrange(t, defaultPostRequest);
 
   await operate(db)(request, response);
 

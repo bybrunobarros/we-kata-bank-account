@@ -1,6 +1,5 @@
 import test from "ava";
-import httpMocks from "node-mocks-http";
-import { setupDatabase } from "../../test/helper/setup-database.js";
+import { arrange } from "../../test/helper/arrange-middleware.js";
 import { getDateFromDatetime } from "../common/get-date-from-datetime.js";
 import { create } from "./middleware.js";
 
@@ -13,10 +12,7 @@ const defaultPostRequest = {
 };
 
 test("should create a new account when requested", async (t) => {
-  const db = await setupDatabase(t);
-  const request = httpMocks.createRequest(defaultPostRequest);
-  let response = httpMocks.createResponse();
-  const next = () => {};
+  const { db, request, response, next } = await arrange(t, defaultPostRequest);
 
   await create(db)(request, response, next);
 
