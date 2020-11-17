@@ -44,6 +44,33 @@ test("should add 20 to current balance when users make a deposit of 20", async (
   );
 });
 
+test("should subtract 20 to current balance when users make a withdrawal of 20", async (t) => {
+  const { db, request, response } = await arrange(t, {
+    ...defaultPostRequest,
+    ...{
+      body: {
+        type: "withdrawal",
+        amount: 20,
+      },
+    },
+  });
+
+  await operate(db)(request, response);
+
+  t.deepEqual(
+    {
+      status: "succeed",
+      body: {
+        operation: "withdrawal",
+        amount: 20,
+        balance: 60,
+        date: getDateFromDatetime(),
+      },
+    },
+    response._getJSONData(),
+  );
+});
+
 test("should return an error when the amount is negative", async (t) => {
   const { db, request, response } = await arrange(t, {
     ...defaultPostRequest,
