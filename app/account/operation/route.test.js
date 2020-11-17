@@ -102,7 +102,7 @@ test("should return 422 when the amount is negative", async (t) => {
   );
 });
 
-test("should add 20 when user make a deposit of 20", async (t) => {
+test("should add 20 when the user makes a deposit of 20", async (t) => {
   await arrange(t);
 
   const response = await fetch(`${t.context.prefixUrl}/accounts/1/operations`, {
@@ -127,7 +127,7 @@ test("should add 20 when user make a deposit of 20", async (t) => {
   );
 });
 
-test("should subtract 20 when user make a withdrawal of 20", async (t) => {
+test("should subtract 20 when the user makes a withdrawal of 20", async (t) => {
   await arrange(t);
 
   const response = await fetch(`${t.context.prefixUrl}/accounts/1/operations`, {
