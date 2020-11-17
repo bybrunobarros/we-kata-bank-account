@@ -2,19 +2,26 @@
 // knex seed:run --esm
 import { join } from "path";
 
+const findPath = (source) => {
+  const currentDirectory = process.cwd();
+  return currentDirectory.includes("data")
+    ? join(currentDirectory, source)
+    : join(currentDirectory, "data", source);
+};
+
 export default {
   development: {
     client: "sqlite3",
     connection: {
-      filename: join(process.cwd(), "dev.db"),
+      filename: findPath("dev.db"),
     },
     useNullAsDefault: true,
     migrations: {
-      directory: join(process.cwd(), "./migrations"),
+      directory: findPath("migrations"),
       loadExtensions: [".mjs"],
     },
     seeds: {
-      directory: join(process.cwd(), "./seeds"),
+      directory: findPath("seeds"),
       loadExtensions: [".mjs"],
     },
   },
@@ -24,11 +31,11 @@ export default {
     connection: ":memory:",
     useNullAsDefault: true,
     migrations: {
-      directory: join(process.cwd(), "./migrations"),
+      directory: findPath("migrations"),
       loadExtensions: [".mjs"],
     },
     seeds: {
-      directory: join(process.cwd(), "./seeds"),
+      directory: findPath("seeds"),
       loadExtensions: [".mjs"],
     },
   },
