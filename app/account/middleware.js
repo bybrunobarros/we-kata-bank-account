@@ -1,3 +1,4 @@
+import { getDateFromDatetime } from "../common/get-date-from-datetime.js";
 import { createAccount } from "./service.js";
 
 export const create = (db) => async (req, res) => {
@@ -7,7 +8,7 @@ export const create = (db) => async (req, res) => {
     status: "succeed",
     body: {
       id,
-      date: new Date(created_at).toISOString().split("T")[0],
+      date: getDateFromDatetime(created_at),
     },
   });
 };

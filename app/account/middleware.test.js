@@ -1,6 +1,7 @@
 import test from "ava";
 import httpMocks from "node-mocks-http";
 import { initDatabase } from "../../data/init-database.js";
+import { getDateFromDatetime } from "../common/get-date-from-datetime.js";
 import { create } from "./middleware.js";
 
 const setupDatabase = async (t) => {
@@ -38,7 +39,7 @@ test("should create a new account when requested", async (t) => {
       status: "succeed",
       body: {
         id: 3,
-        date: new Date().toISOString().split("T")[0],
+        date: getDateFromDatetime(),
       },
     },
     response._getJSONData(),

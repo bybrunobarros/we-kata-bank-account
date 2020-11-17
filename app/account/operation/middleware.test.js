@@ -1,6 +1,7 @@
 import test from "ava";
 import httpMocks from "node-mocks-http";
 import { initDatabase } from "../../../data/init-database.js";
+import { getDateFromDatetime } from "../../common/get-date-from-datetime.js";
 import { operate } from "./middleware.js";
 
 const setupDatabase = async (t) => {
@@ -55,7 +56,7 @@ test("should add 20 to current balance when users make a deposit of 20", async (
         operation: "deposit",
         amount: 20,
         balance: 100,
-        date: new Date().toISOString().split("T")[0],
+        date: getDateFromDatetime(),
       },
     },
     response._getJSONData(),

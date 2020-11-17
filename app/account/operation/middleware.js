@@ -1,3 +1,4 @@
+import { getDateFromDatetime } from "../../common/get-date-from-datetime.js";
 import { createOperation } from "./service.js";
 
 export const operate = (db) => async (req, res) => {
@@ -16,7 +17,7 @@ export const operate = (db) => async (req, res) => {
     body: {
       amount: operation.amount,
       balance: operation.balance,
-      date: new Date(operation.created_at).toISOString().split("T")[0],
+      date: getDateFromDatetime(operation.created_at),
       operation: operation.type,
     },
   });
