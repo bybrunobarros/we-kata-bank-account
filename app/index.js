@@ -1,4 +1,5 @@
 import express from "express";
+import operationRouter from "./account/operation/route.js";
 import accountRouter from "./account/route.js";
 
 export const createApp = (db) => {
@@ -10,6 +11,7 @@ export const createApp = (db) => {
     next();
   });
   app.use("/", accountRouter(db));
+  app.use("/", operationRouter(db));
 
   return app;
 };
