@@ -12,7 +12,13 @@ Cache-Control: no-cache
 }
 
 ### should return 401 when authentication token is not recognized
-GET http://localhost:3000/accounts/1/
+GET http://localhost:3000/accounts/1/operations/
 Accept: application/json
 Cache-Control: no-cache
 Authorization: Bearer BadToken
+
+### should return 403 when user id and account id don't match
+GET http://localhost:3000/accounts/2/operations/
+Accept: application/json
+Cache-Control: no-cache
+Authorization: Bearer QWxiZXJ0
