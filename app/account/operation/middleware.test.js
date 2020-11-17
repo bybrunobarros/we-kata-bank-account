@@ -1,7 +1,7 @@
 import test from "ava";
 import { arrange } from "../../../test/helper/arrange-middleware.js";
 import { getDateFromDatetime } from "../../common/get-date-from-datetime.js";
-import { operate } from "./middleware.js";
+import { list, operate } from "./middleware.js";
 
 const defaultPostRequest = {
   method: "POST",
@@ -15,6 +15,24 @@ const defaultPostRequest = {
   body: {
     type: "deposit",
     amount: 20,
+  },
+  context: {
+    user: {
+      id: 1,
+      name: "Albert", // Bearer: QWxiZXJ0
+    },
+    accountId: 1,
+  },
+};
+
+const defaultGetRequest = {
+  method: "GET",
+  url: "/accounts/1/operations",
+  headers: {
+    Authorization: "Bearer QWxiZXJ0",
+  },
+  params: {
+    accountId: 1,
   },
   context: {
     user: {
@@ -137,6 +155,40 @@ test("should return an error when the operation is not recognized", async (t) =>
     {
       status: "failed",
       body: { message: "Unknown operation" },
+    },
+    response._getJSONData(),
+  );
+});
+
+test("should return a list of operations when user id and account id match", async (t) => {
+  const { db, request, response } = await arrange(t, defaultGetRequest);
+
+  await list(db)(request, response);
+
+  t.is(response._getStatusCode(), 200);
+  t.deepEqual(
+    {
+      status: "succeed",
+      body: [
+        {
+          operation: "deposit",
+          amount: 100,
+          balance: 100,
+          date: "2020-11-01",
+        },
+        {
+          operation: "deposit",
+          amount: 20,
+          balance: 120,
+          date: "2020-11-02",
+        },
+        {
+          operation: "withdrawal",
+          amount: 40,
+          balance: 80,
+          date: "2020-11-03",
+        },
+      ],
     },
     response._getJSONData(),
   );
