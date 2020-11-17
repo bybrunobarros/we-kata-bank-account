@@ -1,4 +1,5 @@
 import httpStatus from "http-status";
+import { formatError } from "../../common/helper/format-error.js";
 import { getDateFromDatetime } from "../../common/helper/get-date-from-datetime.js";
 import { createOperation, listOperations } from "./service.js";
 
@@ -31,12 +32,9 @@ const operate = (db) => async (req, res) => {
   });
 
   if (operation.error) {
-    return res.status(httpStatus.UNPROCESSABLE_ENTITY).json({
-      status: "failed",
-      body: {
-        message: operation.error,
-      },
-    });
+    return res
+      .status(httpStatus.UNPROCESSABLE_ENTITY)
+      .json(formatError(httpStatus.UNPROCESSABLE_ENTITY, operation.error));
   }
 
   res.json({
