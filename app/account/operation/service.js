@@ -33,12 +33,17 @@ export const createOperation = (db) => async ({
     accountId,
   );
 
+  const newBalance = OPERATIONS[operationType](currentBalance, amount);
+  if (newBalance < 0) {
+    return { error: "Insufficient balance" };
+  }
+
   await db("operation").insert({
     account_id: accountId,
     user_id: userId,
     type: operationType,
     amount: amount,
-    balance: OPERATIONS[operationType](currentBalance, amount),
+    balance: newBalance,
   });
 
   return getLastOperation(db)(userId, accountId);
