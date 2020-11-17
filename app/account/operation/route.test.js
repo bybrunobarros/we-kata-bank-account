@@ -30,7 +30,7 @@ test("should return 403 when user id and account id don't match", async (t) => {
   t.is(response.status, 403);
 });
 
-test("should return 422 when the amount is malformed", async (t) => {
+test("should return 422 when the body is malformed", async (t) => {
   await arrange(t);
 
   const response = await fetch(`${t.context.prefixUrl}/accounts/1/operations`, {
