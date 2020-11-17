@@ -105,3 +105,6 @@ dist
 
 # Sqlite database on local environment
 data/dev.db
+
+# Webstorm internal files
+.idea
