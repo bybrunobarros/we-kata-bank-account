@@ -21,7 +21,7 @@ test("should create a new account when requested", async (t) => {
     }),
   });
 
-  t.is(200, response.status);
+  t.is(response.status, 200);
   t.deepEqual(
     {
       status: "succeed",

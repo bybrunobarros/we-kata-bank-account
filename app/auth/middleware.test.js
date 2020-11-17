@@ -30,5 +30,6 @@ test("should add the user to the request context when the user exists", async (t
 
   await authenticate(db)(request, response, next);
 
+  t.is(response._getStatusCode(), 200);
   t.is(request.context.user.id, 1);
 });

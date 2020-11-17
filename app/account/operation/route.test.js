@@ -113,6 +113,7 @@ test("should add 20 when the user makes a deposit of 20", async (t) => {
     }),
   });
 
+  t.is(response.status, 200);
   t.deepEqual(
     {
       status: "succeed",
@@ -138,6 +139,7 @@ test("should subtract 20 when the user makes a withdrawal of 20", async (t) => {
     }),
   });
 
+  t.is(response.status, 200);
   t.deepEqual(
     {
       status: "succeed",
@@ -180,6 +182,7 @@ test("should return a list of operations when user id and account id match", asy
     headers: { Authorization: "Bearer QWxiZXJ0" },
   });
 
+  t.is(response.status, 200);
   t.deepEqual(
     {
       status: "succeed",
