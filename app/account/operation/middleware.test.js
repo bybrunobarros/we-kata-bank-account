@@ -71,6 +71,29 @@ test("should subtract 20 to current balance when users make a withdrawal of 20",
   );
 });
 
+test("should return an error when balance is not enough to withdraw", async (t) => {
+  const { db, request, response } = await arrange(t, {
+    ...defaultPostRequest,
+    ...{
+      body: {
+        type: "withdrawal",
+        amount: 100,
+      },
+    },
+  });
+
+  await operate(db)(request, response);
+
+  t.is(response._getStatusCode(), 422);
+  t.deepEqual(
+    {
+      status: "failed",
+      body: { message: "Insufficient balance" },
+    },
+    response._getJSONData(),
+  );
+});
+
 test("should return an error when the amount is negative", async (t) => {
   const { db, request, response } = await arrange(t, {
     ...defaultPostRequest,
