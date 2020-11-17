@@ -1,0 +1,12 @@
+# Albert QWxiZXJ0
+# Betty QmV0dHk=
+# Charles Q2hhcmxlcw==
+
+### should create a new account when requested
+POST http://localhost:3000/accounts
+Accept: application/json
+Cache-Control: no-cache
+
+{
+  "name": "Charles"
+}
