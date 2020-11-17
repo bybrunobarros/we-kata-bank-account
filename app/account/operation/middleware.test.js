@@ -1,22 +1,8 @@
 import test from "ava";
 import httpMocks from "node-mocks-http";
-import { initDatabase } from "../../../data/init-database.js";
+import { setupDatabase } from "../../../test/helper/setup-database.js";
 import { getDateFromDatetime } from "../../common/get-date-from-datetime.js";
 import { operate } from "./middleware.js";
-
-const setupDatabase = async (t) => {
-  try {
-    const db = initDatabase();
-    t.teardown(async () => await db.migrate.down());
-
-    await db.migrate.latest();
-    await db.seed.run();
-
-    return db;
-  } catch (e) {
-    console.error(e);
-  }
-};
 
 const defaultPostRequest = {
   method: "POST",
