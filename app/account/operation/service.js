@@ -16,6 +16,10 @@ export const createOperation = (db) => async ({
   operationType,
   amount,
 }) => {
+  if (amount < 0) {
+    return { error: "Amount must be positive" };
+  }
+
   const { balance: currentBalance } = await getLastOperation(db)(
     userId,
     accountId,
