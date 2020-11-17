@@ -1,7 +1,7 @@
 import test from "ava";
 import fetch from "node-fetch";
 import { setupDatabase, setupServer } from "../../test/helper/setup.js";
-import { getDateFromDatetime } from "../common/get-date-from-datetime.js";
+import { getDateFromDatetime } from "../common/helper/get-date-from-datetime.js";
 
 const arrange = async (t) => {
   t.context.db = await setupDatabase(t);

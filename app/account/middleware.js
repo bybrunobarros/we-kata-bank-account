@@ -1,4 +1,4 @@
-import { getDateFromDatetime } from "../common/get-date-from-datetime.js";
+import { getDateFromDatetime } from "../common/helper/get-date-from-datetime.js";
 import { createAccount } from "./service.js";
 
 export const create = (db) => async (req, res) => {

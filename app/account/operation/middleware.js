@@ -1,5 +1,5 @@
 import httpStatus from "http-status";
-import { getDateFromDatetime } from "../../common/get-date-from-datetime.js";
+import { getDateFromDatetime } from "../../common/helper/get-date-from-datetime.js";
 import { createOperation, listOperations } from "./service.js";
 
 const formatBody = (operation) => ({

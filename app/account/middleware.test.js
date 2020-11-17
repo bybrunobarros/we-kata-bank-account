@@ -1,6 +1,6 @@
 import test from "ava";
 import { arrange } from "../../test/helper/arrange-middleware.js";
-import { getDateFromDatetime } from "../common/get-date-from-datetime.js";
+import { getDateFromDatetime } from "../common/helper/get-date-from-datetime.js";
 import { create } from "./middleware.js";
 
 const defaultPostRequest = {
