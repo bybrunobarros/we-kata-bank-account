@@ -33,12 +33,9 @@ test("should return 401 when authentication token is not recognized", async (t) 
 test("should return 403 when user id and account id don't match", async (t) => {
   await arrange(t);
 
-  const response = await fetch(
-    `${t.context.prefixUrl}/accounts/account2/operations`,
-    {
-      headers: { Authorization: "Bearer QWxiZXJ0" },
-    },
-  );
+  const response = await fetch(`${t.context.prefixUrl}/accounts/2/operations`, {
+    headers: { Authorization: "Bearer QWxiZXJ0" },
+  });
 
   t.is(response.status, 403);
 });
