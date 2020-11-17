@@ -1,6 +1,6 @@
 import { createUser, findByName } from "../user/service.js";
 
-export const createAccount = (db) => async (name) => {
+const createAccount = (db) => async (name) => {
   let user = await findByName(name);
   if (!user) {
     user = createUser(name);
@@ -18,3 +18,14 @@ export const createAccount = (db) => async (name) => {
 
   return { id, user_id, created_at };
 };
+
+const findUserAccountById = (db) => async (userId, accountId) => {
+  const accounts = await db("account").select("id").where({
+    id: accountId,
+    user_id: userId,
+  });
+
+  return accounts.length === 1 ? accounts[0] : null;
+};
+
+export { createAccount, findUserAccountById };
