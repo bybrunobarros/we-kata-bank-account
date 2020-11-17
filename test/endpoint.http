@@ -32,3 +32,20 @@ Authorization: Bearer QWxiZXJ0
 {
   "type": "deposit"
 }
+
+### should return 422 when the operation is not recognized
+POST http://localhost:3000/accounts/1/operations/
+Content-Type: application/json
+Cache-Control: no-cache
+Authorization: Bearer QWxiZXJ0
+
+{
+  "type": "transfer",
+  "amount": 20
+}
+
+### should return 422 when the amount is negative
+POST http://localhost:3000/accounts/1/operations/
+Content-Type: application/json
+Cache-Control: no-cache
+Authorization: Bearer QWxiZXJ0

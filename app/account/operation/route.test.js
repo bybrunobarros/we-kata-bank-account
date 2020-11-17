@@ -82,3 +82,24 @@ test("should return 422 when the operation is not recognized", async (t) => {
     await response.json(),
   );
 });
+
+test("should return 422 when the amount is negative", async (t) => {
+  await arrange(t);
+
+  const response = await fetch(`${t.context.prefixUrl}/accounts/1/operations`, {
+    ...defaultPostRequest,
+    body: JSON.stringify({
+      type: "deposit",
+      amount: -20,
+    }),
+  });
+
+  t.is(422, response.status);
+  t.deepEqual(
+    {
+      status: "failed",
+      body: { message: `"amount" must be greater than 0` },
+    },
+    await response.json(),
+  );
+});
