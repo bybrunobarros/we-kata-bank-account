@@ -193,3 +193,29 @@ test("should return a list of operations when user id and account id match", asy
     response._getJSONData(),
   );
 });
+
+test("should return an empty list when user id and account id don't match", async (t) => {
+  const { db, request, response } = await arrange(t, {
+    ...defaultGetRequest,
+    ...{
+      context: {
+        user: {
+          id: "user2",
+          name: "Betty",
+        },
+        accountId: 1,
+      },
+    },
+  });
+
+  await list(db)(request, response);
+
+  t.is(response._getStatusCode(), 200);
+  t.deepEqual(
+    {
+      status: "succeed",
+      body: [],
+    },
+    response._getJSONData(),
+  );
+});
