@@ -29,3 +29,27 @@ test("should return 403 when user id and account id don't match", async (t) => {
 
   t.is(response.status, 403);
 });
+
+test("should return 422 when the amount is malformed", async (t) => {
+  await arrange(t);
+
+  const response = await fetch(`${t.context.prefixUrl}/accounts/1/operations`, {
+    method: "post",
+    headers: {
+      Authorization: "Bearer QWxiZXJ0",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      type: "deposit",
+    }),
+  });
+
+  t.is(422, response.status);
+  t.deepEqual(
+    {
+      status: "failed",
+      body: { message: `"amount" is required` },
+    },
+    await response.json(),
+  );
+});

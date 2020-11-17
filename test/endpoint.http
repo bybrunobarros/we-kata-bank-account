@@ -22,3 +22,13 @@ GET http://localhost:3000/accounts/2/operations/
 Accept: application/json
 Cache-Control: no-cache
 Authorization: Bearer QWxiZXJ0
+
+### should return 422 when body is malformed
+POST http://localhost:3000/accounts/1/operations/
+Content-Type: application/json
+Cache-Control: no-cache
+Authorization: Bearer QWxiZXJ0
+
+{
+  "type": "deposit"
+}
