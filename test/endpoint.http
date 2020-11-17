@@ -10,3 +10,9 @@ Cache-Control: no-cache
 {
   "name": "Charles"
 }
+
+### should return 401 when authentication token is not recognized
+GET http://localhost:3000/accounts/1/
+Accept: application/json
+Cache-Control: no-cache
+Authorization: Bearer BadToken
