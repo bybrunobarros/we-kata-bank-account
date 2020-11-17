@@ -1,4 +1,4 @@
-# we-kata-bank-account
+# we-kata-bank-account [![Build Status](https://travis-ci.com/bybrunobarros/we-kata-bank-account.svg?branch=main)](https://travis-ci.com/bybrunobarros/we-kata-bank-account)
 https://gist.github.com/abachar/d20bdcd07dac589feef8ef21b487648c
 
 ## Statement
@@ -74,7 +74,7 @@ The main packages used for this project are:
 - [Knex](http://knexjs.org/) is a query builder, it supports SQLite and MySQL amongst other.
 - [Ava](https://github.com/avajs/ava) is used a test runner. It easily works, without any configuration needed.
 
-A [collection]("endpoint.http") of "[HTTP request in Editor](https://github.com/JetBrains/http-request-in-editor-spec)" is provided, as well. It is natively supported by WebStorm and can be run in VS Code with the [Rest Client](https://marketplace.visualstudio.com/items?itemName=humao.rest-client) plugin installed.
+A [collection](test/endpoint.http) of "[HTTP request in Editor](https://github.com/JetBrains/http-request-in-editor-spec)" is provided, as well. It is natively supported by WebStorm and can be run in VS Code with the [Rest Client](https://marketplace.visualstudio.com/items?itemName=humao.rest-client) plugin installed.
 
 ## Run
 To run the project you need to open a terminal and go tho the project folder.
