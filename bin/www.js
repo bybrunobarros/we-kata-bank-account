@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 import http from "http";
-import { createApp } from "../app.js";
+import { createApp } from "../app/index.js";
 import { initDatabase } from "../data/init-database.js";
 
 const app = createApp(initDatabase());
