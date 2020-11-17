@@ -30,6 +30,7 @@ test("should add 20 to current balance when users make a deposit of 20", async (
 
   await operate(db)(request, response);
 
+  t.is(response._getStatusCode(), 200);
   t.deepEqual(
     {
       status: "succeed",
@@ -57,6 +58,7 @@ test("should subtract 20 to current balance when users make a withdrawal of 20",
 
   await operate(db)(request, response);
 
+  t.is(response._getStatusCode(), 200);
   t.deepEqual(
     {
       status: "succeed",
