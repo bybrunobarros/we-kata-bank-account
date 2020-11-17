@@ -42,7 +42,7 @@ export const createOperation = (db) => async ({
     account_id: accountId,
     user_id: userId,
     type: operationType,
-    amount: amount,
+    amount,
     balance: newBalance,
   });
 
