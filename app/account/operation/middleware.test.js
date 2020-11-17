@@ -43,3 +43,26 @@ test("should add 20 to current balance when users make a deposit of 20", async (
     response._getJSONData(),
   );
 });
+
+test("should return an error when the amount is negative", async (t) => {
+  const { db, request, response } = await arrange(t, {
+    ...defaultPostRequest,
+    ...{
+      body: {
+        type: "deposit",
+        amount: -20,
+      },
+    },
+  });
+
+  await operate(db)(request, response);
+
+  t.is(response._getStatusCode(), 409);
+  t.deepEqual(
+    {
+      status: "failed",
+      body: { message: "Amount must be positive" },
+    },
+    response._getJSONData(),
+  );
+});
