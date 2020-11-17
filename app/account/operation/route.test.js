@@ -53,3 +53,28 @@ test("should return 422 when the body is malformed", async (t) => {
     await response.json(),
   );
 });
+
+test("should return 422 when the operation is not recognized", async (t) => {
+  await arrange(t);
+
+  const response = await fetch(`${t.context.prefixUrl}/accounts/1/operations`, {
+    method: "post",
+    headers: {
+      Authorization: "Bearer QWxiZXJ0",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      type: "transfer",
+      amount: 100,
+    }),
+  });
+
+  t.is(422, response.status);
+  t.deepEqual(
+    {
+      status: "failed",
+      body: { message: `"type" must be one of [deposit, withdrawal]` },
+    },
+    await response.json(),
+  );
+});
