@@ -1,6 +1,7 @@
 import test from "ava";
 import fetch from "node-fetch";
 import { setupDatabase, setupServer } from "../../../test/helper/setup.js";
+import { getDateFromDatetime } from "../../common/helper/get-date-from-datetime.js";
 
 const arrange = async (t) => {
   t.context.db = await setupDatabase(t);
@@ -99,6 +100,31 @@ test("should return 422 when the amount is negative", async (t) => {
     {
       status: "failed",
       body: { message: `"amount" must be greater than 0` },
+    },
+    await response.json(),
+  );
+});
+
+test("should add 20 when user make a deposit of 20", async (t) => {
+  await arrange(t);
+
+  const response = await fetch(`${t.context.prefixUrl}/accounts/1/operations`, {
+    ...defaultPostRequest,
+    body: JSON.stringify({
+      type: "deposit",
+      amount: 20,
+    }),
+  });
+
+  t.deepEqual(
+    {
+      status: "succeed",
+      body: {
+        operation: "deposit",
+        amount: 20,
+        balance: 100,
+        date: getDateFromDatetime(),
+      },
     },
     await response.json(),
   );

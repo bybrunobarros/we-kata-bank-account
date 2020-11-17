@@ -49,3 +49,14 @@ POST http://localhost:3000/accounts/1/operations/
 Content-Type: application/json
 Cache-Control: no-cache
 Authorization: Bearer QWxiZXJ0
+
+### should add 20 when user make a deposit of 20
+POST http://localhost:3000/accounts/1/operations/
+Content-Type: application/json
+Cache-Control: no-cache
+Authorization: Bearer QWxiZXJ0
+
+{
+  "type": "deposit",
+  "amount": 20
+}
