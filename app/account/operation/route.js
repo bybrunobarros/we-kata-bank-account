@@ -3,7 +3,7 @@ import Joi from "joi";
 import { authenticate, authorize } from "../../auth/middleware.js";
 import { asyncWrapper as _async } from "../../common/middleware/async-wrapper.js";
 import { validateBody } from "../../common/middleware/validate-body.js";
-import { operate } from "./middleware.js";
+import { list, operate } from "./middleware.js";
 import { OPERATION_NAMES } from "./service.js";
 
 const schema = {
@@ -21,6 +21,7 @@ export default (db) => {
   router
     .route("/accounts/:accountId/operations")
     .all(_async(authenticate(db), authorize(db)))
+    .get(_async(list(db)))
     .post(_async(validateBody(schema.operationsPost), operate(db)));
   return router;
 };
