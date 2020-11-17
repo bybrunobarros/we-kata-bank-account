@@ -1,3 +1,8 @@
+const OPERATIONS = {
+  deposit: (balance, amount) => balance + amount,
+  withdrawal: (balance, amount) => balance - amount,
+};
+
 const getLastOperation = (db) => async (userId, accountId) => {
   const operations = await db("operation")
     .where({
@@ -16,7 +21,7 @@ export const createOperation = (db) => async ({
   operationType,
   amount,
 }) => {
-  if (!["deposit", "withdrawal"].includes(operationType)) {
+  if (!Object.keys(OPERATIONS).includes(operationType)) {
     return { error: "Unknown operation" };
   }
   if (amount < 0) {
@@ -33,7 +38,7 @@ export const createOperation = (db) => async ({
     user_id: userId,
     type: operationType,
     amount: amount,
-    balance: currentBalance + amount,
+    balance: OPERATIONS[operationType](currentBalance, amount),
   });
 
   return getLastOperation(db)(userId, accountId);
