@@ -82,3 +82,9 @@ Authorization: Bearer QWxiZXJ0
   "type": "withdrawal",
   "amount": 100
 }
+
+### should return a list of operations when user id and account id match
+GET http://localhost:3000/accounts/1/operations/
+Accept: application/json
+Cache-Control: no-cache
+Authorization: Bearer QWxiZXJ0

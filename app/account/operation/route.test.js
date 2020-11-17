@@ -175,3 +175,38 @@ test("should return 422 when balance is not enough to withdraw", async (t) => {
     await response.json(),
   );
 });
+
+test("should return a list of operations when user id and account id match", async (t) => {
+  await arrange(t);
+
+  const response = await fetch(`${t.context.prefixUrl}/accounts/1/operations`, {
+    headers: { Authorization: "Bearer QWxiZXJ0" },
+  });
+
+  t.deepEqual(
+    {
+      status: "succeed",
+      body: [
+        {
+          operation: "deposit",
+          amount: 100,
+          balance: 100,
+          date: "2020-11-01",
+        },
+        {
+          operation: "deposit",
+          amount: 20,
+          balance: 120,
+          date: "2020-11-02",
+        },
+        {
+          operation: "withdrawal",
+          amount: 40,
+          balance: 80,
+          date: "2020-11-03",
+        },
+      ],
+    },
+    await response.json(),
+  );
+});
