@@ -13,11 +13,15 @@ test("should create a new account when requested", async (t) => {
 
   const response = await fetch(`${t.context.prefixUrl}/accounts`, {
     method: "post",
-    body: {
-      name: "Charles",
+    headers: {
+      "Content-Type": "application/json",
     },
+    body: JSON.stringify({
+      name: "Charles",
+    }),
   });
 
+  t.is(200, response.status);
   t.deepEqual(
     {
       status: "succeed",
