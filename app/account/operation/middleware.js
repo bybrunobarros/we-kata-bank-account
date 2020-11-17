@@ -14,7 +14,7 @@ export const operate = (db) => async (req, res) => {
   });
 
   if (operation.error) {
-    return res.status(httpStatus.CONFLICT).json({
+    return res.status(httpStatus.UNPROCESSABLE_ENTITY).json({
       status: "failed",
       body: {
         message: operation.error,

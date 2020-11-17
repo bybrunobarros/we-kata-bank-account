@@ -16,6 +16,9 @@ export const createOperation = (db) => async ({
   operationType,
   amount,
 }) => {
+  if (!["deposit", "withdrawal"].includes(operationType)) {
+    return { error: "Unknown operation" };
+  }
   if (amount < 0) {
     return { error: "Amount must be positive" };
   }
