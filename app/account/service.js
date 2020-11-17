@@ -1,9 +1,9 @@
 import { createUser, findByName } from "../user/service.js";
 
 const createAccount = (db) => async (name) => {
-  let user = await findByName(name);
-  if (!user) {
-    user = createUser(name);
+  let user = await findByName(db)(name);
+  if (!user || !user.name) {
+    user = await createUser(db)(name);
   }
 
   const [id] = await db("account").insert({

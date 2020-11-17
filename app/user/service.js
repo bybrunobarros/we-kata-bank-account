@@ -3,7 +3,7 @@ const createUser = (db) => async (name) => {
     name,
   });
 
-  return findByName(name);
+  return findByName(db)(name);
 };
 
 const findByName = (db) => async (name) => {
